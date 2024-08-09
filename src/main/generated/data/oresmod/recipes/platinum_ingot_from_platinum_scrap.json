@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "oresmod:platinum_scrap"
+    },
+    {
+      "item": "oresmod:platinum_scrap"
+    },
+    {
+      "item": "oresmod:platinum_scrap"
+    },
+    {
+      "item": "oresmod:platinum_scrap"
+    },
+    {
+      "item": "minecraft:amethyst_shard"
+    },
+    {
+      "item": "minecraft:amethyst_shard"
+    },
+    {
+      "item": "minecraft:amethyst_shard"
+    },
+    {
+      "item": "minecraft:amethyst_shard"
+    }
+  ],
+  "result": {
+    "item": "oresmod:platinum_ingot"
+  }
+}

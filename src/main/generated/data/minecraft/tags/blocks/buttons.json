@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "oresmod:frosite_button",
+    "oresmod:light_frosite_button",
+    "oresmod:dark_frosite_button"
+  ]
+}

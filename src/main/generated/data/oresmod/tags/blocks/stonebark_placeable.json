@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:stone",
+    "minecraft:diorite",
+    "minecraft:andesite",
+    "minecraft:granite",
+    "minecraft:gravel",
+    "minecraft:cobblestone",
+    "minecraft:mossy_cobblestone",
+    "minecraft:dripstone_block",
+    "oresmod:marble"
+  ]
+}

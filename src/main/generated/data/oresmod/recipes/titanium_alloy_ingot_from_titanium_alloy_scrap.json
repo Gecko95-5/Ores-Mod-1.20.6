@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "oresmod:titanium_alloy_scrap"
+    },
+    {
+      "item": "oresmod:titanium_alloy_scrap"
+    },
+    {
+      "item": "oresmod:titanium_alloy_scrap"
+    },
+    {
+      "item": "oresmod:titanium_alloy_scrap"
+    },
+    {
+      "item": "oresmod:aluminum_ingot"
+    },
+    {
+      "item": "oresmod:aluminum_ingot"
+    },
+    {
+      "item": "oresmod:aluminum_ingot"
+    },
+    {
+      "item": "oresmod:aluminum_ingot"
+    }
+  ],
+  "result": {
+    "item": "oresmod:titanium_alloy_ingot"
+  }
+}
