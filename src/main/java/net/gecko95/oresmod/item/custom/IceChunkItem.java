@@ -1,7 +1,7 @@
 package net.gecko95.oresmod.item.custom;
 
 import net.gecko95.oresmod.entity.custom.projectiles.IceProjectileEntity;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.thrown.SnowballEntity;
 import net.minecraft.item.Item;
@@ -49,8 +49,9 @@ public class IceChunkItem extends Item {
         }
         return TypedActionResult.success(itemStack, world.isClient());
     }
+
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(RECHARGE_TEXT);
         tooltip.add(ScreenTexts.EMPTY);
         tooltip.add(ON_HIT);
@@ -59,6 +60,6 @@ public class IceChunkItem extends Item {
         tooltip.add(WHEN_APPLIED);
         tooltip.add(ScreenTexts.space().append(DESEFFECT_EXPLAIN_TEXT));
         tooltip.add(APPLY_TEXT);
-        super.appendTooltip(stack, world, tooltip, context);
+        super.appendTooltip(stack, context, tooltip, type);
     }
 }

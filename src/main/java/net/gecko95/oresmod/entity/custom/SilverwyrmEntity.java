@@ -122,10 +122,7 @@ public class SilverwyrmEntity extends HostileEntity {
     protected SoundEvent getDeathSound() {
         return SoundEvents.ENTITY_VEX_DEATH;
     }
-    @Override
-    public EntityGroup getGroup() {
-        return EntityGroup.ARTHROPOD;
-    }
+
 
 
     @Override

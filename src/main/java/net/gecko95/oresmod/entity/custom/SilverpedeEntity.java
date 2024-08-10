@@ -11,6 +11,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.random.Random;
@@ -83,13 +84,10 @@ public class SilverpedeEntity extends HostileEntity {
     protected SoundEvent getDeathSound() {
         return SoundEvents.ENTITY_SILVERFISH_DEATH;
     }
-    @Override
-    public EntityGroup getGroup() {
-        return EntityGroup.ARTHROPOD;
-    }
+
     @Override
     @Nullable
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
         if (entityData == null) {
             entityData = new SilverpedeEntity.SilverpedeData();
             if (world.getDifficulty() == Difficulty.EASY && random.nextFloat() < 0.1f * difficulty.getClampedLocalDifficulty()) {
@@ -106,7 +104,7 @@ public class SilverpedeEntity extends HostileEntity {
             SilverpedeEntity.SilverpedeData silverpedeData = (SilverpedeEntity.SilverpedeData)entityData;
             StatusEffect statusEffect = silverpedeData.effect;
             if (statusEffect != null) {
-                this.addStatusEffect(new StatusEffectInstance(statusEffect, -1));
+                this.addStatusEffect(new StatusEffectInstance((RegistryEntry<StatusEffect>) statusEffect, -1));
             }
         }
         return entityData;
@@ -119,15 +117,15 @@ public class SilverpedeEntity extends HostileEntity {
             public void setEffect(Random random) {
                 int i = random.nextInt(5);
                 if (i <= 1) {
-                    this.effect = StatusEffects.SPEED;
+                    this.effect = (StatusEffect) StatusEffects.SPEED;
                 } else if (i == 2) {
-                    this.effect = StatusEffects.WEAKNESS;
+                    this.effect = (StatusEffect) StatusEffects.WEAKNESS;
                 } else if (i == 3) {
-                    this.effect = StatusEffects.REGENERATION;
+                    this.effect = (StatusEffect) StatusEffects.REGENERATION;
                 } else if (i == 4) {
-                    this.effect = StatusEffects.RESISTANCE;
+                    this.effect = (StatusEffect) StatusEffects.RESISTANCE;
                 } else if (i == 5) {
-                    this.effect = StatusEffects.STRENGTH;
+                    this.effect = (StatusEffect) StatusEffects.STRENGTH;
                 }
             }
         }

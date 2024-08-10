@@ -31,7 +31,7 @@ public class IceProjectileEntity extends ThrownItemEntity {
         super(ModEntities.ICE_PROJECTILE, livingEntity, world);
     }
     private ParticleEffect getParticleParameters() {
-        ItemStack itemStack = this.getItem();
+        ItemStack itemStack = this.getStack();
         return itemStack.isEmpty() ? ParticleTypes.SNOWFLAKE : new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack);
     }
     @Override

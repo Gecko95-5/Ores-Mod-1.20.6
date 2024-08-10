@@ -17,9 +17,9 @@ public class MilkTankBlock extends Block {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         player.clearStatusEffects();
-        return ActionResult.SUCCESS;
+        return super.onUse(state, world, pos, player, hit);
     }
 
     @Override

@@ -12,9 +12,11 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 
 public class ModRecipeProvider extends FabricRecipeProvider {
@@ -64,9 +66,10 @@ public class ModRecipeProvider extends FabricRecipeProvider {
             ModBlocks.PLATINUM_CLUSTER_ORE);
     private static final List<ItemConvertible> END_ITE_SMELTABLES = List.of(ModBlocks.END_ITE_ORE);
 
-    public ModRecipeProvider(FabricDataOutput output) {
-        super(output);
+    public ModRecipeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+        super(output, registriesFuture);
     }
+
 
     @Override
     public void generate(RecipeExporter exporter) {

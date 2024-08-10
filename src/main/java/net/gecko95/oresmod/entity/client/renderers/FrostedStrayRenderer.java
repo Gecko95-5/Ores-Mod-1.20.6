@@ -6,6 +6,7 @@ import net.gecko95.oresmod.OresMod;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.StrayEntityRenderer;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
+import net.minecraft.entity.mob.StrayEntity;
 import net.minecraft.util.Identifier;
 @Environment(value= EnvType.CLIENT)
 public class FrostedStrayRenderer extends StrayEntityRenderer {
@@ -15,7 +16,7 @@ public class FrostedStrayRenderer extends StrayEntityRenderer {
         super(context);
     }
 
-    public Identifier getTexture(AbstractSkeletonEntity abstractSkeletonEntity){
+    public Identifier getTexture(StrayEntity strayEntity){
         return TEXTURE;
     }
 }

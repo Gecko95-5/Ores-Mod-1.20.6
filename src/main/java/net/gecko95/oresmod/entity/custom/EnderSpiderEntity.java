@@ -6,9 +6,11 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.SpiderEntity;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 
@@ -32,7 +34,7 @@ public class EnderSpiderEntity extends SpiderEntity {
                     i = 20;
                 }
                 if (i > 0) {
-                    ((LivingEntity)target).addStatusEffect(new StatusEffectInstance(ModEffects.DECREASE_HEALTH, i * 10, 0), this);
+                    ((LivingEntity)target).addStatusEffect(new StatusEffectInstance((RegistryEntry<StatusEffect>) ModEffects.DECREASE_HEALTH, i * 10, 0), this);
                 }
             }
             return true;

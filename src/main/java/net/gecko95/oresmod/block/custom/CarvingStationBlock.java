@@ -65,14 +65,14 @@ public class CarvingStationBlock extends BlockWithEntity implements BlockEntityP
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (!world.isClient) {
-        NamedScreenHandlerFactory screenHandlerFactory = ((CarvingBlockEntity) world.getBlockEntity(pos));
+            NamedScreenHandlerFactory screenHandlerFactory = ((CarvingBlockEntity) world.getBlockEntity(pos));
 
-        if (screenHandlerFactory != null) {
-            player.openHandledScreen(screenHandlerFactory);
+            if (screenHandlerFactory != null) {
+                player.openHandledScreen(screenHandlerFactory);
+            }
         }
-    }
 
         return ActionResult.SUCCESS;
     }

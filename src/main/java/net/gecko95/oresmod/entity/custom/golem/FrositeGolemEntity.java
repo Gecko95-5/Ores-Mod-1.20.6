@@ -86,10 +86,11 @@ public class FrositeGolemEntity extends HostileEntity {
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(ATTACKING, false);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(ATTACKING, false);
     }
+
     public void setAttacking(boolean attacking){
         this.dataTracker.set(ATTACKING, attacking);
     }

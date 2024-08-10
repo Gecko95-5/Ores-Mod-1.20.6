@@ -1,6 +1,6 @@
 package net.gecko95.oresmod.item.custom;
 
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
@@ -28,9 +28,10 @@ public class BlueprintItem extends Item {
     public static BlueprintItem createUniformBlueprint() {
         return new BlueprintItem(UNIFORM_STYLE_TEXT);
     }
+
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(this.styleText);
-        super.appendTooltip(stack, world, tooltip, context);
+        super.appendTooltip(stack, context, tooltip, type);
     }
 }

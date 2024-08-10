@@ -1,6 +1,6 @@
 package net.gecko95.oresmod.item.custom;
 
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -26,9 +26,11 @@ public class IcyDaggerItem extends CarverItem{
     private static final Text EFFECT_EXPLAIN_TEXT = Text.literal("+40% Speed").formatted(DESCRIPTION_FORMATTING);
     private static final Text WHEN_APPLIED = Text.literal("When Applied").formatted(TITLE_FORMATTING);
     private static final Text ON_USE = Text.literal("On Use").formatted(TITLE_FORMATTING);
-    public IcyDaggerItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+
+    public IcyDaggerItem(ToolMaterial toolMaterial, Settings settings) {
+        super(toolMaterial, settings);
     }
+
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
@@ -38,7 +40,7 @@ public class IcyDaggerItem extends CarverItem{
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(ON_USE);
         tooltip.add(EFFECT_TEXT);
         tooltip.add(DESEFFECT_TEXT);
@@ -46,6 +48,6 @@ public class IcyDaggerItem extends CarverItem{
         tooltip.add(WHEN_APPLIED);
         tooltip.add(ScreenTexts.space().append(EFFECT_EXPLAIN_TEXT));
         tooltip.add(ScreenTexts.space().append(DESEFFECT_EXPLAIN_TEXT));
-        super.appendTooltip(stack, world, tooltip, context);
+        super.appendTooltip(stack, context, tooltip, type);
     }
 }

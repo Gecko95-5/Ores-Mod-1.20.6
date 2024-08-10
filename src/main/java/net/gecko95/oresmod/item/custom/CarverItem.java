@@ -7,6 +7,10 @@ import com.google.common.collect.Multimap;
 import com.mojang.datafixers.util.Pair;
 import net.gecko95.oresmod.block.ModBlocks;
 import net.minecraft.block.*;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.AttributeModifierSlot;
+import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.component.type.ToolComponent;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -14,6 +18,7 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
@@ -22,13 +27,12 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class CarverItem extends ToolItem implements Vanishable  {
-    private final float attackDamage;
-    private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
+public class CarverItem extends ToolItem  {
     protected static final Map<Block, Pair<Predicate<ItemUsageContext>, Consumer<ItemUsageContext>>> CARVING = Maps.newHashMap(ImmutableMap.of
             (ModBlocks.FOSSILIZED_SILVER_SCALES, Pair.of(CarverItem::canCarve, CarverItem.createCarveAction(ModBlocks.SILVER_SCALES.getDefaultState())),
                     ModBlocks.FOSSILIZED_SILVER_SCALE_CORE, Pair.of(CarverItem::canCarve, CarverItem.createCarveAction(ModBlocks.SILVER_SCALE_CORE.getDefaultState())),
@@ -37,32 +41,22 @@ public class CarverItem extends ToolItem implements Vanishable  {
                     Blocks.MOSSY_COBBLESTONE, Pair.of(itemUsageContext -> true, CarverItem.createCarvingAndDropAction(Blocks.COBBLESTONE.getDefaultState(), Items.MOSS_CARPET)),
                     Blocks.MOSSY_STONE_BRICKS, Pair.of(itemUsageContext -> true, CarverItem.createCarvingAndDropAction(Blocks.STONE_BRICKS.getDefaultState(), Items.MOSS_CARPET))));
 
-
-    public CarverItem(ToolMaterial material, int attackDamage, float attackSpeed, Item.Settings settings) {
-        super(material, settings);
-        this.attackDamage = (float)attackDamage + material.getAttackDamage();
-        ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier", this.attackDamage, EntityAttributeModifier.Operation.ADDITION));
-        builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", attackSpeed, EntityAttributeModifier.Operation.ADDITION));
-        this.attributeModifiers = builder.build();
+    public CarverItem(ToolMaterial toolMaterial, Item.Settings settings) {
+        super(toolMaterial, settings.component(DataComponentTypes.TOOL, CarverItem.createToolComponent()));
     }
 
-    public float getAttackDamage() {
-        return this.attackDamage;
+    private static ToolComponent createToolComponent() {
+        return new ToolComponent(List.of(ToolComponent.Rule.ofAlwaysDropping(List.of(Blocks.COBWEB), 15.0f), ToolComponent.Rule.of(BlockTags.SWORD_EFFICIENT, 1.5f)), 1.0f, 2);
+    }
+
+    public static AttributeModifiersComponent createAttributeModifiers(ToolMaterial material, int baseAttackDamage, float attackSpeed) {
+        return AttributeModifiersComponent.builder().add(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier", (float)baseAttackDamage + material.getAttackDamage(), EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND).add(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", attackSpeed, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND).build();
     }
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        stack.damage(2, attacker, e -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
+        stack.damage(4, attacker, EquipmentSlot.MAINHAND);
         return true;
-    }
-
-    @Override
-    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
-        if (slot == EquipmentSlot.MAINHAND) {
-            return this.attributeModifiers;
-        }
-        return super.getAttributeModifiers(slot);
     }
 
     @Override
@@ -81,7 +75,7 @@ public class CarverItem extends ToolItem implements Vanishable  {
             if (!world.isClient) {
                 consumer.accept(context);
                 if (playerEntity != null) {
-                    context.getStack().damage(1, playerEntity, p -> p.sendToolBreakStatus(context.getHand()));
+                    context.getStack().damage(1, playerEntity, LivingEntity.getSlotForHand(context.getHand()));
                 }
             }
             return ActionResult.success(world.isClient);

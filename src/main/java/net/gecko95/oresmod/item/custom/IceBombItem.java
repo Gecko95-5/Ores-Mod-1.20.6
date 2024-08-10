@@ -1,7 +1,7 @@
 package net.gecko95.oresmod.item.custom;
 
 import net.gecko95.oresmod.entity.custom.projectiles.IceBombProjectileEntity;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -40,9 +40,10 @@ public class IceBombItem extends Item {
         }
         return TypedActionResult.success(itemStack, world.isClient());
     }
+
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(RECHARGE_TEXT);
-        super.appendTooltip(stack, world, tooltip, context);
+        super.appendTooltip(stack, context, tooltip, type);
     }
 }

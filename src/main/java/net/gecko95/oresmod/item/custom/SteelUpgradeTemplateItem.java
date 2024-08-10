@@ -1,6 +1,6 @@
 package net.gecko95.oresmod.item.custom;
 
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenTexts;
@@ -22,14 +22,16 @@ public class SteelUpgradeTemplateItem extends Item {
     public SteelUpgradeTemplateItem(Settings settings) {
         super(settings);
     }
+
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        super.appendTooltip(stack, world, tooltip, context);
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(STEEL_UPGRADE_TEXT);
         tooltip.add(ScreenTexts.EMPTY);
         tooltip.add(APPLIES_TO_TEXT);
         tooltip.add(ScreenTexts.space().append(STEEL_UPGRADE_APPLIES_TO_TEXT));
         tooltip.add(INGREDIENTS_TEXT);
         tooltip.add(ScreenTexts.space().append(STEEL_UPGRADE_INGREDIENTS_TEXT));
+        super.appendTooltip(stack, context, tooltip, type);
     }
 }
+
